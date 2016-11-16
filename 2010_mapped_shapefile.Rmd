@@ -15,17 +15,14 @@ library(ggmap)
 
 ```{r, warning=FALSE}
 shpfile <- "/Users/jeffkropelnicki/Documents/R_codes/2010_census_data/2010_shapefile/2010.shp"
-sh <- readShapePoly(shpfile)
-plot(sh)
-plot(sh, col=colors(1-sh$Population/max(sh$Population)))
+area <- readShapePoly(shpfile)
+plot(area)
+plot(area, col=colors(1-area$Population/max(area$Population)))
 ```
 
 This is slow and does not work! Only prints black and white google map. The map is in the right place just no shapefile over the top   
 
 ```{r}
-area <- readShapePoly("/Users/jeffkropelnicki/Documents/R_codes/2010_census_data/2010_shapefile/2010.shp")
-
-
 colors <- brewer.pal(8, "BuGn")
 
 
