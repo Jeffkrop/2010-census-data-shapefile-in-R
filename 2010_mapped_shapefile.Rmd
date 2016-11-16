@@ -1,0 +1,53 @@
+---
+title: "2010_census"
+author: "Jeff Kropelnicki"
+date: "11/16/2016"
+output: html_document
+---
+
+```{r setup, include=FALSE, warning=FALSE}
+library(ggplot2)
+library(maptools)
+library(RColorBrewer)
+library(ggmap)
+```
+
+
+```{r, warning=FALSE}
+shpfile <- "/Users/jeffkropelnicki/Documents/R_codes/2010_census_data/2010_shapefile/2010.shp"
+sh <- readShapePoly(shpfile)
+plot(sh)
+plot(sh, col=colors(1-sh$Population/max(sh$Population)))
+```
+
+This is slow and does not work! Only prints black and white google map. The map is in the right place just no shapefile over the top   
+
+```{r}
+area <- readShapePoly("/Users/jeffkropelnicki/Documents/R_codes/2010_census_data/2010_shapefile/2010.shp")
+
+
+colors <- brewer.pal(8, "BuGn")
+
+
+mapImage <- get_map(location = c(lon = -93.277, lat = 44.957),
+  color = "bw",
+  source = "osm",
+  #maptype = "",
+  zoom = 15)
+
+area.points <- fortify(area)
+
+ggmap(mapImage) +
+  geom_polygon(aes(x = long,
+      y = lat,
+      group = group),
+    data = area.points,
+    color = colors[9],
+    fill = colors[6],
+    alpha = 0.5) +
+labs(x = "Longitude",
+  y = "Latitude")
+```
+
+
+
